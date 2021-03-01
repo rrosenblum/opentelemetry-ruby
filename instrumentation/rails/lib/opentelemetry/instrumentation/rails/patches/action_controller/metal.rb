@@ -11,10 +11,10 @@ module OpenTelemetry
         module ActionController
           # Module to prepend to ActionController::Metal for instrumentation
           module Metal
-            def dispatch(name, request, response)
+            def dispatch(name, request)
               rack_span = OpenTelemetry::Instrumentation::Rack.current_span
               rack_span.name = "#{self.class.name}##{name}" if rack_span.context.valid? && !request.env['action_dispatch.exception']
-              super(name, request, response)
+              super
             end
           end
         end
